@@ -1,0 +1,5 @@
+hari\darmawan\core\models\repos\ProductRepo.class
+hari\darmawan\core\Application.class
+hari\darmawan\core\models\entities\Product.class
+hari\darmawan\core\services\ProductService.class
+hari\darmawan\core\controllers\ProductController.class

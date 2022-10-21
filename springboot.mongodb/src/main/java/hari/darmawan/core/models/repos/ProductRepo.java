@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ProductRepo extends CrudRepository<Product,Long> {
 
-    List<Product> FindByNameContains(String name); //derivied query function
+//    List<Product> FindByNameContains(String name); //derivied query function
 }

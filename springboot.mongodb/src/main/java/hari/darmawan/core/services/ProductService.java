@@ -15,7 +15,7 @@ public class ProductService {
     @Autowired //dependecyInjecton
     private ProductRepo productRepo;
 
-    public Product create(Product product){
+    public Product save(Product product){
         return productRepo.save(product);
     }
 
@@ -30,4 +30,7 @@ public class ProductService {
     public void removeOne(long id){
         productRepo.deleteById(id);
     }
+//    public List<Product> findByName(String name){
+//        return productRepo.FindByNameContains(name);
+//    }
 }
