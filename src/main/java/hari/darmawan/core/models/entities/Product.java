@@ -1,51 +1,45 @@
 package hari.darmawan.core.models.entities;
 
-import javax.persistence.*;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 
-@Entity
-@Table(name="tbl_product") //untuk mengecek apakah ada tabel product kalo gada akan di generate
-public class Product implements Serializable {
-
+@Document(collection = "products")
+public class Product  {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @NotEmpty(message = "Name is required")
-    @Column(name = "product_name",length = 100)
-    private String nama;
+    private String name;
 
     @NotEmpty(message = "description is required")
-    @Column(name = "product_description",length =500)
     private String description;
 
     private double price;
 
-    public Product() {
-    }
-
-    public Product(Long id, String nama, String description, double price) {
+    public Product(String id, String name, String description, double price) {
         this.id = id;
-        this.nama = nama;
+        this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getNama() {
-        return nama;
+    public String getName() {
+        return name;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

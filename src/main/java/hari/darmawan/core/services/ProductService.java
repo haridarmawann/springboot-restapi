@@ -4,9 +4,9 @@ import hari.darmawan.core.models.entities.Product;
 import hari.darmawan.core.models.repos.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
-import java.util.List;
+
 import java.util.Optional;
 
 @Service
@@ -20,7 +20,7 @@ public class ProductService {
         return productRepo.save(product);
     }
 
-    public Product findOne(long id){
+    public Product findOne(String id){
         Optional<Product> temp = productRepo.findById(id);
         if(!temp.isPresent()){
             return null;
@@ -32,7 +32,7 @@ public class ProductService {
         return productRepo.findAll();
     }
 
-    public void removeOne(long id){
+    public void removeOne(String id){
         productRepo.deleteById(id);
     }
 //    public List<Product> findByName(String name){

@@ -41,14 +41,14 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/{id}",method=RequestMethod.GET)
-    public Product findOne(@PathVariable("id") Long id){ // path variable untuk menyambungkan ke id yang di getmapping
+    public Product findOne(@PathVariable("id") String id){ // path variable untuk menyambungkan ke id yang di getmapping
         return productService.findOne(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<ResponseData<Product>> update(@Valid @RequestBody Product product,Errors errors) {
         ResponseData<Product> responseData = new ResponseData<>();
-        
+
         if(errors.hasErrors()){
             for (ObjectError error : errors.getAllErrors()){
                 responseData.getMessage().add(error.getDefaultMessage());
@@ -58,12 +58,13 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         }
         responseData.setStatus(true);
-        responseData.setPayLoad(productService.save(product)); //disini masi bisa menjadi masalah saat save
+        responseData.setPayLoad(productService.save(product));
+        //disini masi bisa menjadi masalah saat save
         return ResponseEntity.ok(responseData);
     }
 
     @RequestMapping(value = "/{id}",method=RequestMethod.DELETE)
-    public void removeOne(@PathVariable("id") Long id){ // path variable untuk menyambungkan ke id yang di getmapping
+    public void removeOne(@PathVariable("id") String id){ // path variable untuk menyambungkan ke id yang di getmapping
         productService.removeOne(id);
     }
 
