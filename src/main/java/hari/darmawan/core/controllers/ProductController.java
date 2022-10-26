@@ -1,5 +1,6 @@
 package hari.darmawan.core.controllers;
 
+import hari.darmawan.core.dto.ResponseBody;
 import hari.darmawan.core.dto.ResponseData;
 import hari.darmawan.core.models.entities.Product;
 import hari.darmawan.core.services.ProductService;
@@ -11,6 +12,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
@@ -35,9 +38,23 @@ public class ProductController {
         return ResponseEntity.ok(responseData);
     }
 
-    @RequestMapping(method=RequestMethod.GET)
-    public Iterable<Product> findAll() {
-        return productService.findAll();
+    @GetMapping
+    public ResponseEntity<ResponseBody> getAllData() {
+        try {
+            List<Product> products = new ArrayList<>();
+            products.addAll(productService.findAll());
+
+            if (products.isEmpty()){
+                ResponseBody response = new ResponseBody(204,"Data is empty",null);
+                return new ResponseEntity<>(response,HttpStatus.OK);
+            }
+            ResponseBody response = new ResponseBody(200,"Data Success Retrieved",products);
+            return new ResponseEntity<>(response,HttpStatus.OK);
+        }catch (Exception e){
+            ResponseBody response = new ResponseBody(500,e.getMessage(),null);
+            return new ResponseEntity<>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     @RequestMapping(value = "/{id}",method=RequestMethod.GET)
@@ -45,7 +62,7 @@ public class ProductController {
         return productService.findOne(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     public ResponseEntity<ResponseData<Product>> update(@Valid @RequestBody Product product,Errors errors) {
         ResponseData<Product> responseData = new ResponseData<>();
 
