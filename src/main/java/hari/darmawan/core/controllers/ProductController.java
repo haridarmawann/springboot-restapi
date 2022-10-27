@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -57,10 +58,24 @@ public class ProductController {
 
     }
 
-    @RequestMapping(value = "/{id}",method=RequestMethod.GET)
-    public Product findOne(@PathVariable("id") String id){ // path variable untuk menyambungkan ke id yang di getmapping
-        return productService.findOne(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseBody> findById(@PathVariable("id") String id){
+        try {
+            Optional<Product> product = productService.findOne(id);
+
+            if (product.isPresent()) {
+                ResponseBody response = new ResponseBody(200, "Data Succes Retrived", product);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            ResponseBody responseBody = new ResponseBody(204, "Data is empty", null);
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        }
+        catch (Exception e){
+            ResponseBody responseBody = new ResponseBody(500, e.getMessage(),null);
+            return new ResponseEntity<>(responseBody,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
     }
+
 
     @PutMapping
     public ResponseEntity<ResponseData<Product>> update(@Valid @RequestBody Product product,Errors errors) {

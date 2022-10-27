@@ -21,12 +21,8 @@ public class ProductService {
         return productRepo.save(product);
     }
 
-    public Product findOne(String id){
-        Optional<Product> temp = productRepo.findById(id);
-        if(!temp.isPresent()){
-            return null;
-        }
-        return temp.get();
+    public Optional<Product> findOne(String id){
+        return productRepo.findById(id);
     }
 
     public List<Product> findAll(){

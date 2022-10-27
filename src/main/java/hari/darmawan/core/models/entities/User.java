@@ -18,8 +18,7 @@ public class User {
     @Field("photos")
     private String photos;
 
-    public User(String id, String email, String firstName, String lastName, String photos) {
-        this.id = id;
+    public User(String email, String firstName, String lastName,String photos) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
